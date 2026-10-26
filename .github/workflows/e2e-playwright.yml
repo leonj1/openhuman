@@ -15,7 +15,7 @@ concurrency:
 jobs:
   e2e-playwright:
     name: E2E (Playwright / web lane)
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:latest
     timeout-minutes: 30

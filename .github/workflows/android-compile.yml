@@ -75,7 +75,7 @@ concurrency:
 jobs:
   build-android:
     name: Build Android App Bundle
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 30
     outputs:
       version_name: ${{ steps.version.outputs.version_name }}
@@ -190,7 +190,7 @@ jobs:
   publish-play:
     name: Publish Google Play
     if: ${{ inputs.publish_to_play }}
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 15
     needs: [build-android]
     environment: Production

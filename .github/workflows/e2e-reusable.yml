@@ -75,7 +75,7 @@ jobs:
   e2e-linux:
     if: inputs.run_linux && !inputs.full
     name: E2E (Linux / Appium Chromium)
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:latest
     timeout-minutes: 30
@@ -188,7 +188,7 @@ jobs:
   build-linux-full:
     if: inputs.run_linux && inputs.full
     name: Build (Linux full)
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:latest
     timeout-minutes: 30
@@ -267,7 +267,7 @@ jobs:
     if: inputs.run_linux && inputs.full
     needs: build-linux-full
     name: E2E (Linux full / ${{ matrix.shard.name }})
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:latest
     timeout-minutes: 30
@@ -381,7 +381,7 @@ jobs:
   rust-e2e-linux:
     if: inputs.run_linux
     name: E2E (Linux / Rust integration suite)
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:latest
     timeout-minutes: 30
@@ -430,7 +430,7 @@ jobs:
   e2e-macos:
     if: inputs.run_macos && !inputs.full
     name: E2E (macOS / Appium Chromium)
-    runs-on: macos-latest
+    runs-on: [self-hosted, macOS, ARM64]
     timeout-minutes: 30
     steps:
       - name: Checkout code
@@ -535,7 +535,7 @@ jobs:
     # windows-latest resolves to Windows Server 2025 / VS 2026, where
     # whisper-rs-sys' CMake build exits with 0xc0000142 before the harness can
     # launch.
-    runs-on: windows-2022
+    runs-on: [self-hosted, windows, x64]
     timeout-minutes: 30
     steps:
       - name: Checkout code
@@ -629,7 +629,7 @@ jobs:
   build-macos-full:
     if: inputs.run_macos && inputs.full
     name: Build (macOS full)
-    runs-on: macos-latest
+    runs-on: [self-hosted, macOS, ARM64]
     timeout-minutes: 30
     steps:
       - name: Checkout code
@@ -715,7 +715,7 @@ jobs:
     if: inputs.run_macos && inputs.full
     needs: build-macos-full
     name: E2E (macOS full / ${{ matrix.shard.name }})
-    runs-on: macos-latest
+    runs-on: [self-hosted, macOS, ARM64]
     timeout-minutes: 30
     strategy:
       fail-fast: false
@@ -831,7 +831,7 @@ jobs:
     if: inputs.run_windows && inputs.full
     name: Build (Windows full)
     # Keep the full-suite build on the same stable image as the smoke lane.
-    runs-on: windows-2022
+    runs-on: [self-hosted, windows, x64]
     timeout-minutes: 30
     steps:
       - name: Checkout code
@@ -915,7 +915,7 @@ jobs:
     needs: build-windows-full
     name: E2E (Windows full / ${{ matrix.shard.name }})
     # Keep full-suite shards on the same stable image as the build job.
-    runs-on: windows-2022
+    runs-on: [self-hosted, windows, x64]
     timeout-minutes: 30
     strategy:
       fail-fast: false

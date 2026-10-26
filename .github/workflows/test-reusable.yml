@@ -39,7 +39,7 @@ jobs:
   i18n-coverage:
     if: inputs.run_unit
     name: i18n Coverage
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 10
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:rust-1.93.0
@@ -64,7 +64,7 @@ jobs:
   unit-tests:
     if: inputs.run_unit
     name: Frontend Unit Tests
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 30
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:rust-1.93.0
@@ -98,7 +98,7 @@ jobs:
   rust-core-tests:
     if: inputs.run_rust_core
     name: Rust Core Tests + Quality
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 20
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:rust-1.93.0
@@ -128,7 +128,7 @@ jobs:
   rust-core-tests-windows:
     if: inputs.run_rust_core
     name: Rust Core Tests (Windows — secrets ACL)
-    runs-on: windows-latest
+    runs-on: [self-hosted, windows, x64]
     timeout-minutes: 30
     env:
       CARGO_INCREMENTAL: '0'
@@ -165,7 +165,7 @@ jobs:
   rust-tauri-tests:
     if: inputs.run_rust_tauri
     name: Rust Tauri Shell Tests
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 20
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:rust-1.93.0

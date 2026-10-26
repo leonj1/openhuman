@@ -97,7 +97,7 @@ on:
 jobs:
   build:
     name: "Desktop: ${{ matrix.settings.artifact_suffix }}"
-    runs-on: ${{ matrix.settings.platform }}
+    runs-on: "${{ (matrix.settings.platform) == 'macos-latest' && fromJSON('[\"self-hosted\",\"macOS\",\"ARM64\"]') || (matrix.settings.platform) == 'ubuntu-24.04' && fromJSON('[\"self-hosted\",\"linux\",\"x64\"]') || (matrix.settings.platform) == 'ubuntu-24.04-arm' && fromJSON('[\"self-hosted\",\"linux\",\"ARM64\"]') || (matrix.settings.platform) == 'windows-latest' && fromJSON('[\"self-hosted\",\"windows\",\"x64\"]') || (matrix.settings.platform) }}"
     timeout-minutes: 70
     environment: Production
     strategy:

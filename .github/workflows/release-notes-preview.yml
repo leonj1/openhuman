@@ -41,7 +41,7 @@ concurrency:
 jobs:
   generate:
     name: Generate Release Notes
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     environment: Production
     steps:
       - name: Checkout

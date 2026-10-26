@@ -17,7 +17,7 @@ jobs:
   # blocking merges. Flip to hard-fail once the false-positive rate is stable.
   checklist-guard:
     name: PR Submission Checklist
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 10
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:rust-1.93.0
@@ -34,7 +34,7 @@ jobs:
         run: node scripts/check-pr-checklist.mjs
   coverage-matrix:
     name: Coverage Matrix Sync
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 10
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:rust-1.93.0
@@ -49,7 +49,7 @@ jobs:
         run: node scripts/check-coverage-matrix.mjs
   markdown-link-check:
     name: Markdown Link Check
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 10
     continue-on-error: true
     if: ${{ !contains(github.event.pull_request.labels.*.name, 'docs') && !contains(github.event.pull_request.labels.*.name, 'chore') }}
@@ -76,7 +76,7 @@ jobs:
           fail: true
   appimage-rpath-guard:
     name: AppImage RPATH + libxdo guard
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 5
     continue-on-error: true
     if: ${{ !contains(github.event.pull_request.labels.*.name, 'docs') && !contains(github.event.pull_request.labels.*.name, 'chore') }}

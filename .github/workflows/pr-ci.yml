@@ -27,7 +27,7 @@ defaults:
 jobs:
   changes:
     name: Detect Changed Areas
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 5
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
@@ -105,7 +105,7 @@ jobs:
     name: Frontend Checks (quality, i18n, docs, coverage)
     needs: [changes]
     if: needs.changes.outputs.frontend == 'true' || needs.changes.outputs.i18n == 'true' || needs.changes.outputs.docs == 'true'
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 60
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:rust-1.93.0
@@ -200,7 +200,7 @@ jobs:
     name: Rust Quality (fmt, clippy)
     needs: [changes]
     if: needs.changes.outputs['rust-core'] == 'true' || needs.changes.outputs['rust-tauri'] == 'true'
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 20
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:rust-1.93.0
@@ -236,7 +236,7 @@ jobs:
     name: Build Playwright E2E Artifact
     needs: [changes]
     if: needs.changes.outputs.playwright == 'true'
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:latest
     timeout-minutes: 30
@@ -335,7 +335,7 @@ jobs:
     name: Rust Core Coverage (cargo-llvm-cov)
     needs: [changes, rust-quality]
     if: always() && needs.changes.outputs['rust-core'] == 'true' && needs['rust-quality'].result == 'success'
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     # 30 min was only ever enough because a stack overflow aborted the run early
     # (see RUST_MIN_STACK below). With the overflow fixed the job runs the full
     # instrumented suite (~13.6k tests, single-threaded build) end-to-end, which
@@ -423,7 +423,7 @@ jobs:
     name: Rust Tauri Coverage (cargo-llvm-cov)
     needs: [changes, rust-quality]
     if: always() && needs.changes.outputs['rust-tauri'] == 'true' && needs['rust-quality'].result == 'success'
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 30
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:rust-1.93.0
@@ -514,7 +514,7 @@ jobs:
     name: Rust E2E (mock backend)
     needs: [changes, rust-quality]
     if: always() && needs.changes.outputs['rust-core'] == 'true' && needs['rust-quality'].result == 'success'
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:latest
     timeout-minutes: 30
@@ -584,7 +584,7 @@ jobs:
       always() &&
       needs.changes.outputs.playwright == 'true' &&
       needs['build-playwright-e2e-artifact'].result == 'success'
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, linux, x64]
     container:
       image: ghcr.io/tinyhumansai/openhuman_ci:latest
     timeout-minutes: 90
@@ -673,7 +673,7 @@ jobs:
       - rust-e2e
       - playwright-e2e
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 15
     steps:
       - name: Require PR CI jobs to pass
